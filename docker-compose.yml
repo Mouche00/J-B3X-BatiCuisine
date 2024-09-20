@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    networks:
+      - postgres-network
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=bati_cuisine
+    volumes:
+#      - ./db-data/:/var/lib/postgresql/data/
+      - ./resources/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+networks:
+  postgres-network:
+    driver: bridge
