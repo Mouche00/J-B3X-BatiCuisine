@@ -17,4 +17,8 @@ public class Cache {
     public static void setClient(String name, Client client) {
         clientCache.put(name, client);
     }
+    public static void setClient(String name, Optional<Client> client) {
+        client.ifPresent(value -> clientCache.put(name, value));
+    }
+
 }

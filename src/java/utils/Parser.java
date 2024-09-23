@@ -37,7 +37,7 @@ public class Parser {
         try {
             return UUID.fromString(str);
         } catch (IllegalArgumentException e) {
-            System.out.println("\nERROR: UUID parsing failed\n");
+            System.out.println("\nERROR: ID parsing failed\n");
         }
         return null;
     }

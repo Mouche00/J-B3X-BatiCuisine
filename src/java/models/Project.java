@@ -2,19 +2,22 @@ package models;
 
 import utils.enums.ProjectStatus;
 
+import java.util.List;
+
 public class Project {
 
-    private int id;
+    private String id;
     private String title;
     private double margin;
     private ProjectStatus status;
     private Client client;
+    private List<Component> components;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -50,7 +53,15 @@ public class Project {
         this.client = client;
     }
 
-    public Project(int id, String title, double margin, ProjectStatus status, Client client) {
+    public List<Component> getComponents() {
+        return components;
+    }
+
+    public void setComponents(List<Component> components) {
+        this.components = components;
+    }
+
+    public Project(String id, String title, double margin, ProjectStatus status, Client client) {
         this.id = id;
         this.title = title;
         this.margin = margin;
@@ -63,5 +74,14 @@ public class Project {
         this.margin = margin;
         this.status = status;
         this.client = client;
+    }
+
+    @Override
+    public String toString() {
+        return "\t#:" + id +
+                "\n\tTitle: " + title +
+                "\n\tMargin: " + margin +
+                "\n\tStatus: " + status +
+                "\n\tClient: " + client.getName();
     }
 }
