@@ -10,10 +10,6 @@ import java.sql.Types;
 import java.util.Optional;
 
 public class MaterialRepositoryImpl extends RepositoryConstructor implements ComponentRepository<Material> {
-    @Override
-    public boolean update(Material material) {
-        return false;
-    }
 
     @Override
     public boolean delete(String id) throws SQLException {
