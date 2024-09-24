@@ -8,8 +8,10 @@ import utils.Parser;
 import utils.Session;
 import utils.Validator;
 import utils.enums.InputType;
+import utils.enums.ProjectStatus;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public class ProjectController {
@@ -32,9 +34,33 @@ public class ProjectController {
             });
     }
 
+    public void list(List<Project> projects) {
+        Validator.listIsEmpty(projects);
+
+        int pos = 0;
+        for(Project project : projects) {
+            System.out.println("\n#" + pos++ + ": "
+                    + "\t" + project);
+        }
+    }
+
     public void getAll() {
+        System.out.println("#-------- Projects List -------#");
         try {
-            service.getAll().forEach(System.out::println);
+            list(service.getAll());
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void update() {
+        try {
+            List<Project> projects = service.getAll();
+            System.out.println("Choose a project:");
+            list(projects);
+            int option = Parser.parseInt(
+                    Validator.validateInput("> ", InputType.OPTION, 0, projects.size()-1));
+            service.updateStatus(projects.get(option).getId(), ProjectStatus.CANCELLED);
         } catch(SQLException e) {
             System.out.println(e.getMessage());
         }
