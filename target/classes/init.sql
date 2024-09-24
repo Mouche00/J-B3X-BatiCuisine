@@ -12,7 +12,7 @@ CREATE TABLE projects (
     id VARCHAR(40) PRIMARY KEY NOT NULL,
     title VARCHAR(50) NOT NULL,
     margin DOUBLE PRECISION,
-    status project_status NOT NULL,
+    status project_status DEFAULT 'ONGOING' NOT NULL,
     client_id VARCHAR(40) NOT NULL,
     CONSTRAINT fk_customer FOREIGN KEY (client_id) REFERENCES clients(id)
 );

@@ -24,13 +24,13 @@ public class Parser {
         return -1;
     }
 
-    public static Optional<Double> parseDouble(String str){
+    public static double parseDouble(String str){
         try{
-            return Optional.of(Double.parseDouble(str));
+            return Double.parseDouble(str);
         } catch(NumberFormatException e) {
             System.out.println("\nERROR: Double parsing failed\n");
         }
-        return Optional.empty();
+        return -1;
     }
 
     public static UUID parseUUID(String str){

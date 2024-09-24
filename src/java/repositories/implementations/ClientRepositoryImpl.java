@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public class ClientRepositoryImpl extends Repository implements ClientRepository {
+public class ClientRepositoryImpl extends RepositoryConstructor implements ClientRepository {
 
     @Override
     public Optional<Client> findByName(String name) throws SQLException {
