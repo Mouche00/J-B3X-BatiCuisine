@@ -31,7 +31,9 @@ public class MaterialController {
                 Validator.validateInput("Enter the material' quality coefficient: ", InputType.DOUBLE));
 
         Session.getProject().ifPresent((project) -> {
-            service.save(new Material(name, VAT, project, price, quantity, transportationCost, qualityCoefficient));
+            Material material = new Material(name, VAT, project, price, quantity, transportationCost, qualityCoefficient);
+            service.save(material);
+            project.getComponents().add(material);
         });
     }
 }

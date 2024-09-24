@@ -24,7 +24,9 @@ public class WorkforceController {
                 Validator.validateInput("Enter the workforce' work hours: ", InputType.DOUBLE));
 
         Session.getProject().ifPresent((project) -> {
-            service.save(new Workforce(name, VAT, project, hourlyRate, workHours));
+            Workforce workforce = new Workforce(name, VAT, project, hourlyRate, workHours);
+            service.save(workforce);
+            project.getComponents().add(workforce);
         });
     }
 }

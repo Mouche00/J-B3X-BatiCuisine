@@ -3,6 +3,7 @@ package models;
 import utils.ID;
 import utils.enums.ProjectStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Project {
@@ -68,6 +69,7 @@ public class Project {
         this.margin = margin;
         this.status = status;
         this.client = client;
+        this.components = new ArrayList<>();
     }
 
     public Project(String title, double margin, Client client) {
@@ -76,6 +78,7 @@ public class Project {
         this.margin = margin;
         this.status = ProjectStatus.ONGOING;
         this.client = client;
+        this.components = new ArrayList<>();
     }
 
     @Override
