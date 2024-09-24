@@ -79,7 +79,7 @@ public class Project {
 
     @Override
     public String toString() {
-        return "\n\t#: " + id +
+        return "\n\tID: " + id +
                 "\n\tTitle: " + title +
                 "\n\tMargin: " + margin +
                 "\n\tStatus: " + status +

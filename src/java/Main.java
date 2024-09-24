@@ -22,7 +22,7 @@ public class Main {
         ProjectController projectController = new ProjectController(projectService);
 
 //        clientController.create();
-        projectController.getAll();
+        projectController.update();
 
     }
 }
