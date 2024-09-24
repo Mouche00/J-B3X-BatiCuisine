@@ -32,15 +32,13 @@ abstract public class Component {
         this.project = project;
     }
 
-    public Component(String id, String name, Project project) {
+    public Component(String id, String name) {
         this.id = id;
         this.name = name;
-        this.project = project;
     }
 
-    public Component(String name, Project project) {
+    public Component(String name) {
         this.id = ID.generate();
         this.name = name;
-        this.project = project;
     }
 }

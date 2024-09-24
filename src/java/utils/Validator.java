@@ -33,10 +33,15 @@ public class Validator {
         return isDate;
     }
 
-    public static boolean isWhithinRange(String option, int min, int max) {
-        if(max <= min) return false;
+    public static boolean isWhithinRange(String option, int... range) {
+        boolean isWhithinRange;
+        if(range.length == 1) {
+            isWhithinRange = Parser.parseDouble(option) >= range[0];
+        } else {
+            if(range[1] < range[0]) return false;
+            isWhithinRange = Parser.parseDouble(option) >= range[0] && Parser.parseDouble(option) <= range[1];
+        }
 
-        boolean isWhithinRange = validateInteger(option) >= min && validateInteger(option) <= max;
         if(!isWhithinRange) System.out.println("\nERROR: Input option is not valid\n");
         return isWhithinRange;
     }
@@ -64,7 +69,7 @@ public class Validator {
                 isValidInput = isDouble(input);
                 break;
             case OPTION:
-                isValidInput = isWhithinRange(input, range[0], range[1]) && isInteger(input);
+                isValidInput = isWhithinRange(input, range);
                 break;
             default:
                 isValidInput = !isEmpty(input);;

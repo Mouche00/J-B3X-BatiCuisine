@@ -32,7 +32,7 @@ public class ProjectRepositoryImpl extends RepositoryConstructor implements Proj
     @Override
     public List<Project> getAll() throws SQLException {
         List<Project> projects = new ArrayList<>();
-        String sql = "SELECT p.*, c.* FROM projects p JOIN clients c ON p.client_id = c.id";
+        String sql = "SELECT p.*, c.* FROM projects p JOIN clients c ON p.client_id = c.id WHERE status <> 'CANCELLED'";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
 
@@ -51,7 +51,9 @@ public class ProjectRepositoryImpl extends RepositoryConstructor implements Proj
             double margin = rs.getDouble("margin");
             ProjectStatus status = ProjectStatus.valueOf(rs.getString("status"));
 
-            projects.add(new Project(id, title, VAT, discount, margin, status, client));
+            Project project = new Project(id, title, VAT, discount, margin, status);
+            project.setClient(client);
+            projects.add(project);
         }
 
         return projects;
@@ -63,7 +65,7 @@ public class ProjectRepositoryImpl extends RepositoryConstructor implements Proj
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, id);
         ResultSet rs = pstmt.executeQuery();
-        Optional<Project> project = Optional.empty();
+        Optional<Project> projectOptional = Optional.empty();
         if(rs.next()) {
             String clientId = rs.getString("client_id");
             String name = rs.getString("name");
@@ -78,9 +80,11 @@ public class ProjectRepositoryImpl extends RepositoryConstructor implements Proj
             double margin = rs.getDouble("margin");
             ProjectStatus status = ProjectStatus.valueOf(rs.getString("status"));
 
-            project = Optional.of(new Project(id, title, VAT, discount, margin, status, client));
+            Project project = new Project(id, title, VAT, discount, margin, status);
+            project.setClient(client);
+            projectOptional = Optional.of(project);
         }
-        return project;
+        return projectOptional;
     }
 
     @Override

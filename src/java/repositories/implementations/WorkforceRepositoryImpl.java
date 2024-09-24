@@ -27,33 +27,19 @@ public class WorkforceRepositoryImpl extends RepositoryConstructor implements Co
     @Override
     public List<Workforce> findAll(String id) throws SQLException {
         List<Workforce> workforces = new ArrayList<>();
-        String sql = "SELECT c.name as client_name, w.name as workforce_name, * FROM workforces w JOIN projects p ON w.project_id = p.id JOIN clients c ON c.id = p.client_id WHERE p.id = ?";
+        String sql = "SELECT * FROM workforces WHERE project_id = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, id);
         ResultSet rs = pstmt.executeQuery();
 
         while (rs.next()) {
-            String clientId = rs.getString("client_id");
-            String clientName = rs.getString("client_name");
-            String address = rs.getString("address");
-            String phone  = rs.getString("phone");
-            boolean isProfessional  = rs.getBoolean("is_professional");
-            Client client = new Client(clientId, clientName, address, phone, isProfessional);
 
-            String projectIid = rs.getString("project_id");
-            String title = rs.getString("title");
-            double VAT = rs.getDouble("VAT");
-            double discount = rs.getDouble("discount");
-            double margin = rs.getDouble("margin");
-            ProjectStatus status = ProjectStatus.valueOf(rs.getString("status"));
-            Project project = new Project(id, title, VAT, discount, margin, status, client);
-
-            String workforceName = rs.getString("workforce_name");
+            String name = rs.getString("name");
             double hourlyRate = rs.getDouble("hourly_rate");
             double workHours = rs.getDouble("work_hours");
             double productivityCoefficient = rs.getDouble("productivity_coeffecient");
 
-            workforces.add(new Workforce(id, workforceName, project, hourlyRate, workHours, productivityCoefficient));
+            workforces.add(new Workforce(id, name, hourlyRate, workHours, productivityCoefficient));
         }
 
         return workforces;

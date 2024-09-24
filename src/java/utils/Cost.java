@@ -1,9 +1,9 @@
-package DTOs;
+package utils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class InvoiceDTO {
+public class Cost {
     private Map<String, Double> componentCosts = new HashMap<>();
     private double materialsTotalNoVAT;
     private double workforcesTotalNoVAT;

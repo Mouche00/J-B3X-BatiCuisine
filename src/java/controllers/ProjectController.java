@@ -20,16 +20,14 @@ public class ProjectController {
         this.service = service;
     }
 
-    public void create() {
-        String title = Validator.validateInput("\nEnter the project' title: ", InputType.STRING);
-        double margin = Parser.parseDouble(
-                Validator.validateInput("Enter the project' margin: ", InputType.DOUBLE));
-        double VAT = Parser.parseDouble(
-                Validator.validateInput("Enter the project' VAT tax rate: ", InputType.DOUBLE));
-        double discount = Parser.parseDouble(
-                Validator.validateInput("Enter the project' discount: ", InputType.DOUBLE));
-
-            Session.getClient().flatMap(client -> service.save(new Project(title, VAT, discount, margin, client))).ifPresent(Session::setProject);
+    public void create(Project project) {
+        Session.getClient().flatMap(client -> {
+            project.setClient(client);
+            return service.save(project);
+        }).ifPresent(p -> {
+            System.out.println("\n** Project added successfully **");
+            Session.setProject(p);
+        });
     }
 
     public void list(List<Project> projects) {
@@ -38,12 +36,11 @@ public class ProjectController {
         int pos = 0;
         for(Project project : projects) {
             System.out.println("\n#" + pos++ + ": "
-                    + "\t" + project);
+                    + "\n\t" + project);
         }
     }
 
     public void getAll() {
-        System.out.println("#-------- Projects List -------#");
         list(service.getAll());
     }
 
@@ -54,6 +51,10 @@ public class ProjectController {
         int option = Parser.parseInt(
                 Validator.validateInput("> ", InputType.OPTION, 0, projects.size()-1));
         service.updateStatus(projects.get(option).getId(), ProjectStatus.CANCELLED);
+    }
+
+    public void delete(Project project) {
+        service.updateStatus(project.getId(), ProjectStatus.CANCELLED);
     }
 
     public void find() {

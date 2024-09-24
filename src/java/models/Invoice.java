@@ -52,20 +52,20 @@ public class Invoice {
         this.project = project;
     }
 
-    public Invoice(String id, double overallCost, LocalDate issuedAt, LocalDate validatedAt, Project project) {
+    public Invoice(String id, LocalDate issuedAt, LocalDate validatedAt) {
         this.id = id;
-        this.overallCost = overallCost;
         this.issuedAt = issuedAt;
         this.validatedAt = validatedAt;
-        this.project = project;
     }
 
-    public Invoice(double overallCost, LocalDate issuedAt, LocalDate validatedAt, Project project) {
+    public Invoice(LocalDate issuedAt, LocalDate validatedAt) {
         this.id = ID.generate();
-        this.overallCost = overallCost;
         this.issuedAt = issuedAt;
         this.validatedAt = validatedAt;
-        this.project = project;
+    }
+
+    public Invoice(double overallCost) {
+        this.overallCost = overallCost;
     }
 
     @Override

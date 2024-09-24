@@ -1,13 +1,12 @@
 package services.implementations;
 
-import DTOs.InvoiceDTO;
+import utils.Cost;
 import models.Invoice;
 import models.Material;
 import models.Project;
 import models.Workforce;
 import repositories.interfaces.ComponentRepository;
 import repositories.interfaces.InvoiceRepository;
-import repositories.interfaces.ProjectRepository;
 import services.interfaces.InvoiceService;
 
 import java.sql.SQLException;
@@ -25,7 +24,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public InvoiceDTO calculateCosts(Project project) {
+    public Cost calculateCosts(Project project) {
         if(project.getMaterials().isEmpty()) {
             try {
                 project.setMaterials(materialRepository.findAll(project.getId()));
@@ -42,7 +41,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             }
         }
 
-        InvoiceDTO invoiceDTO = new InvoiceDTO();
+        Cost invoiceDTO = new Cost();
 
         double materialsTotal = 0;
         for (Material material : project.getMaterials()) {

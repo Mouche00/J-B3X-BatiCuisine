@@ -30,15 +30,15 @@ public class Workforce extends Component {
         this.productivityCoefficient = productivityCoefficient;
     }
 
-    public Workforce(String id, String name, Project project, double hourlyRate, double workHours, double productivityCoefficient) {
-        super(id, name, project);
+    public Workforce(String id, String name, double hourlyRate, double workHours, double productivityCoefficient) {
+        super(id, name);
         this.hourlyRate = hourlyRate;
         this.workHours = workHours;
         this.productivityCoefficient = productivityCoefficient;
     }
 
-    public Workforce(String name, Project project, double hourlyRate, double workHours, double productivityCoefficient) {
-        super(name, project);
+    public Workforce(String name, double hourlyRate, double workHours, double productivityCoefficient) {
+        super(name);
         this.hourlyRate = hourlyRate;
         this.workHours = workHours;
         this.productivityCoefficient = productivityCoefficient;

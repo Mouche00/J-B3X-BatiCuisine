@@ -23,34 +23,20 @@ public class MaterialRepositoryImpl extends RepositoryConstructor implements Com
     @Override
     public List<Material> findAll(String id) throws SQLException {
         List<Material> materials = new ArrayList<>();
-        String sql = "SELECT c.name as client_name, m.name as material_name, * FROM materials m JOIN projects p ON m.project_id = p.id JOIN clients c ON c.id = p.client_id WHERE p.id = ?";
+        String sql = "SELECT * FROM materials WHERE project_id = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, id);
         ResultSet rs = pstmt.executeQuery();
 
         while (rs.next()) {
-            String clientId = rs.getString("client_id");
-            String clientName = rs.getString("client_name");
-            String address = rs.getString("address");
-            String phone  = rs.getString("phone");
-            boolean isProfessional  = rs.getBoolean("is_professional");
-            Client client = new Client(clientId, clientName, address, phone, isProfessional);
 
-            String projectIid = rs.getString("project_id");
-            String title = rs.getString("title");
-            double VAT = rs.getDouble("VAT");
-            double discount = rs.getDouble("discount");
-            double margin = rs.getDouble("margin");
-            ProjectStatus status = ProjectStatus.valueOf(rs.getString("status"));
-            Project project = new Project(id, title, VAT, discount, margin, status, client);
-
-            String materialName = rs.getString("material_name");
+            String name = rs.getString("name");
             double price = rs.getDouble("price");
             double quantity = rs.getDouble("quantity");
             double transportationCost = rs.getDouble("transportation_cost");
             double qualityCoefficient = rs.getDouble("quality_coeffecient");
 
-            materials.add(new Material(id, materialName, project, price, quantity, transportationCost, qualityCoefficient));
+            materials.add(new Material(id, name, price, quantity, transportationCost, qualityCoefficient));
         }
 
         return materials;

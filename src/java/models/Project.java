@@ -90,7 +90,7 @@ public class Project {
         this.workforces = workforces;
     }
 
-    public Project(String id, String title, double VAT, double discount, double margin, ProjectStatus status, Client client) {
+    public Project(String id, String title, double VAT, double discount, double margin, ProjectStatus status) {
         this.id = id;
         this.title = title;
         this.VAT = VAT;
@@ -100,7 +100,7 @@ public class Project {
         this.client = client;
     }
 
-    public Project(String title, double VAT, double discount, double margin, Client client) {
+    public Project(String title, double VAT, double discount, double margin) {
         this.id = ID.generate();
         this.title = title;
         this.VAT = VAT;
@@ -112,7 +112,7 @@ public class Project {
 
     @Override
     public String toString() {
-        return "\n\tID: " + id +
+        return "ID: " + id +
                 "\n\tTitle: " + title +
                 "\n\tVAT: " + VAT +
                 "\n\tDiscount: " + discount +
