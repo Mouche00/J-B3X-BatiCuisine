@@ -69,16 +69,17 @@ public class Project {
         this.client = client;
     }
 
-    public Project(String title, double margin, ProjectStatus status, Client client) {
+    public Project(String id, String title, double margin, Client client) {
+        this.id = id;
         this.title = title;
         this.margin = margin;
-        this.status = status;
+        this.status = ProjectStatus.ONGOING;
         this.client = client;
     }
 
     @Override
     public String toString() {
-        return "\t#:" + id +
+        return "\n\t#: " + id +
                 "\n\tTitle: " + title +
                 "\n\tMargin: " + margin +
                 "\n\tStatus: " + status +
