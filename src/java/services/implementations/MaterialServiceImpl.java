@@ -25,7 +25,13 @@ public class MaterialServiceImpl implements ComponentService<Material> {
     }
 
     @Override
-    public Optional<Material> save(Material material) throws SQLException {
-        return repository.save(material);
+    public Optional<Material> save(Material material) {
+        try {
+            return repository.save(material);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return Optional.empty();
     }
 }

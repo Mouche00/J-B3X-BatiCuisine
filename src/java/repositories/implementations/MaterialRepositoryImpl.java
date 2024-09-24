@@ -5,6 +5,7 @@ import repositories.interfaces.ComponentRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.Optional;
 
@@ -15,8 +16,10 @@ public class MaterialRepositoryImpl extends RepositoryConstructor implements Com
     }
 
     @Override
-    public boolean delete(String id) {
-        return false;
+    public boolean delete(String id) throws SQLException {
+        String sql = "DELETE FROM materials WHERE id = ?";
+        Statement stmt = conn.createStatement();
+        return stmt.executeUpdate(sql) > 0;
     }
 
     @Override

@@ -29,25 +29,16 @@ public class ClientController {
 
         Client client = new Client(name, address, phone, isProfessional);
 
-        try {
-            service.save(client).ifPresent(Session::setClient);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
+        service.save(client).ifPresent(Session::setClient);
     }
 
     public void find() {
         String name = Validator.validateInput("\nEnter the client' name: ", InputType.STRING);
 
-        try {
-            Optional<Client> client = service.findByName(name);
-            client.ifPresent((c) -> {
-                Session.setClient(c);
-                System.out.println(c);
-            });
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        Optional<Client> client = service.findByName(name);
+        client.ifPresent((c) -> {
+            Session.setClient(c);
+            System.out.println(c);
+        });
     }
 }
