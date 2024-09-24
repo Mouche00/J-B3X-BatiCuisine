@@ -16,17 +16,17 @@ public class WorkforceController {
 
     public void create() {
         String name = Validator.validateInput("\nEnter the workforce' name: ", InputType.STRING);
-        double VAT = Parser.parseDouble(
-                Validator.validateInput("Enter the workforce' VAT tax rate: ", InputType.DOUBLE));
         double hourlyRate = Parser.parseDouble(
                 Validator.validateInput("Enter the workforce' hourly rate: ", InputType.DOUBLE));
         double workHours = Parser.parseDouble(
                 Validator.validateInput("Enter the workforce' work hours: ", InputType.DOUBLE));
+        double productivityCoefficient = Parser.parseDouble(
+                Validator.validateInput("Enter the workforce' productivity coefficient: ", InputType.DOUBLE));
 
         Session.getProject().ifPresent((project) -> {
-            Workforce workforce = new Workforce(name, VAT, project, hourlyRate, workHours);
+            Workforce workforce = new Workforce(name, project, hourlyRate, workHours, productivityCoefficient);
             service.save(workforce);
-            project.getComponents().add(workforce);
+            project.addWorkforce(workforce);
         });
     }
 }

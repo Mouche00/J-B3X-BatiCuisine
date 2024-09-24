@@ -6,7 +6,7 @@ public class MainMenu extends Menu {
 
     @Override
     public int prompt() {
-        System.out.println("#-------- Main Menu -------#"
+        System.out.println("#-------------- Main Menu -------------#"
                 + "\nSelect an option:"
                 + "\n1 - Create a new project"
                 + "\n2 - List all existing projects"

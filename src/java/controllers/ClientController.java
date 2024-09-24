@@ -27,9 +27,7 @@ public class ClientController {
                 "\n> ", InputType.OPTION, 0, 1);
         boolean isProfessional = isProfessionalOption.equals("0");
 
-        Client client = new Client(name, address, phone, isProfessional);
-
-        service.save(client).ifPresent(Session::setClient);
+        service.save(new Client(name, address, phone, isProfessional)).ifPresent(Session::setClient);
     }
 
     public void find() {

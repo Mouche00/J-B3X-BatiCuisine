@@ -4,6 +4,7 @@ public class Workforce extends Component {
 
     private double hourlyRate;
     private double workHours;
+    private double productivityCoefficient;
 
     public double getHourlyRate() {
         return hourlyRate;
@@ -21,15 +22,32 @@ public class Workforce extends Component {
         this.workHours = workHours;
     }
 
-    public Workforce(String id, String name, double VAT, Project project, double hourlyRate, double workHours) {
-        super(id, name, VAT, project);
-        this.hourlyRate = hourlyRate;
-        this.workHours = workHours;
+    public double getProductivityCoefficient() {
+        return productivityCoefficient;
     }
 
-    public Workforce(String name, double VAT, Project project, double hourlyRate, double workHours) {
-        super(name, VAT, project);
+    public void setProductivityCoefficient(double productivityCoefficient) {
+        this.productivityCoefficient = productivityCoefficient;
+    }
+
+    public Workforce(String id, String name, Project project, double hourlyRate, double workHours, double productivityCoefficient) {
+        super(id, name, project);
         this.hourlyRate = hourlyRate;
         this.workHours = workHours;
+        this.productivityCoefficient = productivityCoefficient;
+    }
+
+    public Workforce(String name, Project project, double hourlyRate, double workHours, double productivityCoefficient) {
+        super(name, project);
+        this.hourlyRate = hourlyRate;
+        this.workHours = workHours;
+        this.productivityCoefficient = productivityCoefficient;
+    }
+
+    @Override
+    public String toString() {
+        return ", Hourly rate: " + hourlyRate + "€/h" +
+                ", Work hours: " + workHours + "h" +
+                ", Productivity coefficient: " + productivityCoefficient;
     }
 }

@@ -6,7 +6,6 @@ abstract public class Component {
 
     protected String id;
     protected String name;
-    protected double VAT;
     protected Project project;
 
     public String getId() {
@@ -25,14 +24,6 @@ abstract public class Component {
         this.name = name;
     }
 
-    public double getVAT() {
-        return VAT;
-    }
-
-    public void setVAT(double VAT) {
-        this.VAT = VAT;
-    }
-
     public Project getProject() {
         return project;
     }
@@ -41,17 +32,15 @@ abstract public class Component {
         this.project = project;
     }
 
-    public Component(String id, String name, double VAT, Project project) {
+    public Component(String id, String name, Project project) {
         this.id = id;
         this.name = name;
-        this.VAT = VAT;
         this.project = project;
     }
 
-    public Component(String name, double VAT, Project project) {
+    public Component(String name, Project project) {
         this.id = ID.generate();
         this.name = name;
-        this.VAT = VAT;
         this.project = project;
     }
 }

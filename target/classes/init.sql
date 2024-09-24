@@ -11,6 +11,8 @@ CREATE TYPE project_status AS ENUM ('CANCELLED', 'ONGOING', 'COMPLETED');
 CREATE TABLE projects (
     id VARCHAR(40) PRIMARY KEY NOT NULL,
     title VARCHAR(50) NOT NULL,
+    VAT DOUBLE PRECISION NOT NULL,
+    discount DOUBLE PRECISION NOT NULL,
     margin DOUBLE PRECISION,
     status project_status DEFAULT 'ONGOING' NOT NULL,
     client_id VARCHAR(40) NOT NULL,
@@ -29,7 +31,6 @@ CREATE TABLE invoices (
 CREATE TABLE components (
     id VARCHAR(40) PRIMARY KEY NOT NULL,
     name VARCHAR(30) NOT NULL,
-    vat DOUBLE PRECISION NOT NULL,
     project_id VARCHAR(40) NOT NULL
 );
 
@@ -42,9 +43,10 @@ CREATE TABLE materials (
     CONSTRAINT fk_project FOREIGN KEY (project_id) REFERENCES projects(id)
 ) INHERITS (components);
 
-CREATE TABLE workforce (
+CREATE TABLE workforces (
    PRIMARY KEY (id),
     hourly_rate DOUBLE PRECISION NOT NULL,
     work_hours DOUBLE PRECISION NOT NULL,
+   productivity_coeffecient DOUBLE PRECISION NOT NULL,
    CONSTRAINT fk_project FOREIGN KEY (project_id) REFERENCES projects(id)
 ) INHERITS (components);

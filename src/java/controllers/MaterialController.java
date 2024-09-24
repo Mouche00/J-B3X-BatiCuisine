@@ -19,8 +19,6 @@ public class MaterialController {
 
     public void create() {
         String name = Validator.validateInput("\nEnter the material' name: ", InputType.STRING);
-        double VAT = Parser.parseDouble(
-                Validator.validateInput("Enter the material' VAT tax rate: ", InputType.DOUBLE));
         double price = Parser.parseDouble(
                 Validator.validateInput("Enter the material' price by unit: ", InputType.DOUBLE));
         double quantity = Parser.parseDouble(
@@ -31,9 +29,9 @@ public class MaterialController {
                 Validator.validateInput("Enter the material' quality coefficient: ", InputType.DOUBLE));
 
         Session.getProject().ifPresent((project) -> {
-            Material material = new Material(name, VAT, project, price, quantity, transportationCost, qualityCoefficient);
+            Material material = new Material(name, project, price, quantity, transportationCost, qualityCoefficient);
             service.save(material);
-            project.getComponents().add(material);
+            project.addMaterial(material);
         });
     }
 }

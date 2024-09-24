@@ -1,18 +1,15 @@
-import controllers.ClientController;
-import controllers.MaterialController;
-import controllers.ProjectController;
+import controllers.*;
 import models.Material;
-import repositories.implementations.ClientRepositoryImpl;
-import repositories.implementations.MaterialRepositoryImpl;
-import repositories.implementations.ProjectRepositoryImpl;
+import models.Workforce;
+import repositories.implementations.*;
 import repositories.interfaces.ClientRepository;
 import repositories.interfaces.ComponentRepository;
+import repositories.interfaces.InvoiceRepository;
 import repositories.interfaces.ProjectRepository;
-import services.implementations.ClientServiceImpl;
-import services.implementations.MaterialServiceImpl;
-import services.implementations.ProjectServiceImpl;
+import services.implementations.*;
 import services.interfaces.ClientService;
 import services.interfaces.ComponentService;
+import services.interfaces.InvoiceService;
 import services.interfaces.ProjectService;
 import utils.Cache;
 import utils.Session;
@@ -31,9 +28,22 @@ public class Main {
         ComponentService<Material> materialService = new MaterialServiceImpl(materialRepository);
         MaterialController materialController = new MaterialController(materialService);
 
+        ComponentRepository<Workforce> workforceRepository = new WorkforceRepositoryImpl();
+        ComponentService<Workforce> workforceService = new WorkforceServiceImpl(workforceRepository);
+        WorkforceController workforceController = new WorkforceController(workforceService);
+
+        InvoiceRepository invoiceRepository = new InvoiceRepositoryImpl();
+        InvoiceService invoiceService = new InvoiceServiceImpl(invoiceRepository, materialRepository, workforceRepository);
+        InvoiceController invoiceController = new InvoiceController(invoiceService);
+
         clientController.find();
-        projectController.create();
-        materialController.create();
+        projectController.find();
+//        projectController.create();
+//        materialController.create();
+//        materialController.create();
+//        workforceController.create();
+        invoiceController.calculate();
+
 
     }
 }
