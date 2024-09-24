@@ -17,7 +17,7 @@ public class ClientController {
     }
 
     public void create() {
-        String name = Validator.validateInput("Enter the client' name: ", InputType.STRING);
+        String name = Validator.validateInput("\nEnter the client' name: ", InputType.STRING);
         String address = Validator.validateInput("Enter the client' address: ", InputType.STRING);
         String phone = Validator.validateInput("Enter the client' phone number: ", InputType.INTEGER);
 
@@ -27,7 +27,7 @@ public class ClientController {
                 "\n> ", InputType.OPTION, 0, 1);
         boolean isProfessional = isProfessionalOption.equals("0");
 
-        Client client = new Client(ID.generate(), name, address, phone, isProfessional);
+        Client client = new Client(name, address, phone, isProfessional);
 
         try {
             service.save(client).ifPresent(Session::setClient);
@@ -38,7 +38,7 @@ public class ClientController {
     }
 
     public void find() {
-        String name = Validator.validateInput("Enter the client' name: ", InputType.STRING);
+        String name = Validator.validateInput("\nEnter the client' name: ", InputType.STRING);
 
         try {
             Optional<Client> client = service.findByName(name);

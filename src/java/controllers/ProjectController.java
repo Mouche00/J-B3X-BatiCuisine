@@ -21,13 +21,13 @@ public class ProjectController {
     }
 
     public void create() {
-        String title = Validator.validateInput("Enter the project' title: ", InputType.STRING);
+        String title = Validator.validateInput("\nEnter the project' title: ", InputType.STRING);
         double margin = Parser.parseDouble(
                 Validator.validateInput("Enter the project' margin: ", InputType.DOUBLE));
 
-            Session.getClient().ifPresent((c) -> {
+            Session.getClient().ifPresent((client) -> {
                 try {
-                    service.save(new Project(ID.generate(), title, margin, c)).ifPresent(Session::setProject);
+                    service.save(new Project(title, margin, client)).ifPresent(Session::setProject);
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
                 }
@@ -56,7 +56,7 @@ public class ProjectController {
     public void update() {
         try {
             List<Project> projects = service.getAll();
-            System.out.println("Choose a project:");
+            System.out.println("\nChoose a project:");
             list(projects);
             int option = Parser.parseInt(
                     Validator.validateInput("> ", InputType.OPTION, 0, projects.size()-1));
