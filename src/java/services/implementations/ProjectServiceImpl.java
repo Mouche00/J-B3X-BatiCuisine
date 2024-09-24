@@ -7,6 +7,7 @@ import services.interfaces.ProjectService;
 import utils.enums.ProjectStatus;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,17 +18,32 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> getAll() throws SQLException {
-        return repository.getAll();
+    public List<Project> getAll() {
+        List<Project> projects = new ArrayList<>();
+        try {
+            projects = repository.getAll();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return projects;
     }
 
     @Override
-    public boolean updateStatus(String id, ProjectStatus status) throws SQLException {
-        return repository.updateStatus(id, status);
+    public boolean updateStatus(String id, ProjectStatus status) {
+        try {
+            return repository.updateStatus(id, status);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public Optional<Project> save(Project project) throws SQLException {
-        return repository.save(project);
+    public Optional<Project> save(Project project) {
+        try {
+            return repository.save(project);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

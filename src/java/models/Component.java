@@ -1,17 +1,19 @@
 package models;
 
+import utils.ID;
+
 abstract public class Component {
 
-    protected int id;
+    protected String id;
     protected String name;
     protected double VAT;
     protected Project project;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -39,7 +41,7 @@ abstract public class Component {
         this.project = project;
     }
 
-    public Component(int id, String name, double VAT, Project project) {
+    public Component(String id, String name, double VAT, Project project) {
         this.id = id;
         this.name = name;
         this.VAT = VAT;
@@ -47,6 +49,7 @@ abstract public class Component {
     }
 
     public Component(String name, double VAT, Project project) {
+        this.id = ID.generate();
         this.name = name;
         this.VAT = VAT;
         this.project = project;

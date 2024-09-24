@@ -1,5 +1,7 @@
 package models;
 
+import utils.ID;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +64,14 @@ public class Client {
 
     public Client(String id, String name, String address, String phone, boolean isProfessional) {
         this.id = id;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.isProfessional = isProfessional;
+    }
+
+    public Client(String name, String address, String phone, boolean isProfessional) {
+        this.id = ID.generate();
         this.name = name;
         this.address = address;
         this.phone = phone;

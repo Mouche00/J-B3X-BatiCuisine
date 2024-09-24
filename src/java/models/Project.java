@@ -1,5 +1,6 @@
 package models;
 
+import utils.ID;
 import utils.enums.ProjectStatus;
 
 import java.util.List;
@@ -69,8 +70,8 @@ public class Project {
         this.client = client;
     }
 
-    public Project(String id, String title, double margin, Client client) {
-        this.id = id;
+    public Project(String title, double margin, Client client) {
+        this.id = ID.generate();
         this.title = title;
         this.margin = margin;
         this.status = ProjectStatus.ONGOING;

@@ -15,18 +15,28 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Optional<Client> findByName(String name) throws SQLException {
+    public Optional<Client> findByName(String name) {
         Optional<Client> client = Cache.getClient(name);
         if(client.isPresent()) return client;
-        client = repository.findByName(name);
-        Cache.setClient(name, client);
+        try {
+            client = repository.findByName(name);
+            Cache.setClient(name, client);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
         return client;
     }
 
     @Override
-    public Optional<Client> save(Client client) throws SQLException {
-        Optional<Client> existingClient = repository.findByName(client.getName());
-        if(existingClient.isPresent()) return existingClient;
-        return repository.save(client);
+    public Optional<Client> save(Client client) {
+        Optional<Client> existingClient = Optional.empty();
+        try {
+            existingClient = repository.findByName(client.getName());
+            if(existingClient.isPresent()) return existingClient;
+            return repository.save(client);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return existingClient;
     }
 }

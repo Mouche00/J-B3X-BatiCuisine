@@ -6,5 +6,5 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public interface Service<T> {
-    Optional<T> save(T t) throws SQLException;
+    Optional<T> save(T t);
 }
