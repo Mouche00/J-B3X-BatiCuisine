@@ -1,11 +1,12 @@
 package services.implementations;
 
+import models.Material;
 import models.Project;
-import repositories.interfaces.ClientRepository;
+import models.Workforce;
+import repositories.interfaces.ComponentRepository;
 import repositories.interfaces.ProjectRepository;
 import services.interfaces.ProjectService;
 import utils.enums.ProjectStatus;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,16 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         return projects;
+    }
+
+    @Override
+    public Optional<Project> get(String id) {
+        try {
+            return repository.get(id);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return Optional.empty();
     }
 
     @Override

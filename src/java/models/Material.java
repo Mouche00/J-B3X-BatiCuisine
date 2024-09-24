@@ -39,19 +39,27 @@ public class Material extends Component {
         this.qualityCoefficient = qualityCoefficient;
     }
 
-    public Material(String id, String name, double VAT, Project project, double price, double quantity, double transportationCost, double qualityCoefficient) {
-        super(id, name, VAT, project);
+    public Material(String id, String name, double price, double quantity, double transportationCost, double qualityCoefficient) {
+        super(id, name);
         this.price = price;
         this.quantity = quantity;
         this.transportationCost = transportationCost;
         this.qualityCoefficient = qualityCoefficient;
     }
 
-    public Material(String name, double VAT, Project project, double price, double quantity, double transportationCost, double qualityCoefficient) {
-        super(name, VAT, project);
+    public Material(String name, double price, double quantity, double transportationCost, double qualityCoefficient) {
+        super(name);
         this.price = price;
         this.quantity = quantity;
         this.transportationCost = transportationCost;
         this.qualityCoefficient = qualityCoefficient;
+    }
+
+    @Override
+    public String toString() {
+        return "Price: " + price + "€/m²" +
+                ", Quantity: " + quantity + "m²" +
+                ", Transportation cost: " + transportationCost + "€" +
+                ", Quality coefficient: " + qualityCoefficient;
     }
 }

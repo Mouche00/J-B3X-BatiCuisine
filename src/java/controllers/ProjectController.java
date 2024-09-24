@@ -20,18 +20,14 @@ public class ProjectController {
         this.service = service;
     }
 
-    public void create() {
-        String title = Validator.validateInput("\nEnter the project' title: ", InputType.STRING);
-        double margin = Parser.parseDouble(
-                Validator.validateInput("Enter the project' margin: ", InputType.DOUBLE));
-
-            Session.getClient().ifPresent((client) -> {
-                try {
-                    service.save(new Project(title, margin, client)).ifPresent(Session::setProject);
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                }
-            });
+    public void create(Project project) {
+        Session.getClient().flatMap(client -> {
+            project.setClient(client);
+            return service.save(project);
+        }).ifPresent(p -> {
+            System.out.println("\n** Project added successfully **");
+            Session.setProject(p);
+        });
     }
 
     public void list(List<Project> projects) {
@@ -40,29 +36,30 @@ public class ProjectController {
         int pos = 0;
         for(Project project : projects) {
             System.out.println("\n#" + pos++ + ": "
-                    + "\t" + project);
+                    + "\n\t" + project);
         }
     }
 
     public void getAll() {
-        System.out.println("#-------- Projects List -------#");
-        try {
-            list(service.getAll());
-        } catch(SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        list(service.getAll());
     }
 
     public void update() {
-        try {
-            List<Project> projects = service.getAll();
-            System.out.println("\nChoose a project:");
-            list(projects);
-            int option = Parser.parseInt(
-                    Validator.validateInput("> ", InputType.OPTION, 0, projects.size()-1));
-            service.updateStatus(projects.get(option).getId(), ProjectStatus.CANCELLED);
-        } catch(SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        List<Project> projects = service.getAll();
+        System.out.println("\nChoose a project:");
+        list(projects);
+        int option = Parser.parseInt(
+                Validator.validateInput("> ", InputType.OPTION, 0, projects.size()-1));
+        service.updateStatus(projects.get(option).getId(), ProjectStatus.CANCELLED);
+    }
+
+    public void delete(Project project) {
+        service.updateStatus(project.getId(), ProjectStatus.CANCELLED);
+    }
+
+    public void find() {
+        String id = Validator.validateInput("\nEnter the project' id: ", InputType.STRING);
+
+        Session.setProject(service.get(id).get());
     }
 }

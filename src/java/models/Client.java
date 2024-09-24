@@ -81,7 +81,7 @@ public class Client {
 
     @Override
     public String toString() {
-        return "\n\tID: " + id +
+        return "\tID: " + id +
                 "\n\tName: " + name +
                 "\n\tAddress: " + address +
                 "\n\tPhone: " + phone +
