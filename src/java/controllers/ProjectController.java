@@ -40,26 +40,23 @@ public class ProjectController {
         }
     }
 
-    public void getAll() {
-        list(service.getAll());
+    public List<Project> getAll() {
+        return service.getAll();
     }
 
-    public void update() {
-        List<Project> projects = service.getAll();
-        System.out.println("\nChoose a project:");
-        list(projects);
-        int option = Parser.parseInt(
-                Validator.validateInput("> ", InputType.OPTION, 0, projects.size()-1));
-        service.updateStatus(projects.get(option).getId(), ProjectStatus.CANCELLED);
+    public List<Project> getAllCancelled() {
+        return service.getAllCancelled();
+    }
+
+    public void update(Project project) {
+        service.updateStatus(project.getId(), ProjectStatus.COMPLETED);
+    }
+
+    public void updateOngoing(Project project) {
+        service.updateStatus(project.getId(), ProjectStatus.ONGOING);
     }
 
     public void delete(Project project) {
         service.updateStatus(project.getId(), ProjectStatus.CANCELLED);
-    }
-
-    public void find() {
-        String id = Validator.validateInput("\nEnter the project' id: ", InputType.STRING);
-
-        Session.setProject(service.get(id).get());
     }
 }

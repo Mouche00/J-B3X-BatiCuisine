@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProjectRepository extends Repository<Project> {
+    List<Project> getAllCancelled() throws SQLException;
     List<Project> getAll() throws SQLException;
     Optional<Project> get(String id) throws SQLException;
     boolean updateStatus(String id, ProjectStatus status) throws SQLException;

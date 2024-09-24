@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProjectService extends Service<Project> {
+    List<Project> getAllCancelled();
     List<Project> getAll();
     Optional<Project> get(String id);
     boolean updateStatus(String id, ProjectStatus status);

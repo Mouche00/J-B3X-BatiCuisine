@@ -4,6 +4,7 @@ import UIs.inputs.*;
 import controllers.*;
 import models.Invoice;
 import models.Material;
+import models.Project;
 import models.Workforce;
 import repositories.implementations.*;
 import repositories.interfaces.ClientRepository;
@@ -20,6 +21,7 @@ import utils.Session;
 import utils.Validator;
 import utils.enums.InputType;
 
+import java.util.List;
 import java.util.Optional;
 
 public class MainMenu extends Menu {
@@ -54,6 +56,7 @@ public class MainMenu extends Menu {
                 + "\nSelect an option:"
                 + "\n1 - Create a new project"
                 + "\n2 - List all existing projects"
+                + "\n3 - Calculate a project' costs"
                 + "\n0 - Exit");
         System.out.print("> ");
         return Validator.validateInteger(scanner.nextLine());
@@ -116,7 +119,36 @@ public class MainMenu extends Menu {
                 break;
             case 2:
                 System.out.println("\n#-------------- Projects List --------------#");
-                projectController.getAll();
+                List<Project> projects = projectController.getAll();
+                projectController.list(projects);
+                if(Validator.validateInput("\nDo you want to mark a project as completed? (y/n) ", InputType.STRING).equals("y")) {
+                    do {
+                        int index = Parser.parseInt(
+                                Validator.validateInput("\nEnter project index: " +
+                                        "\n> ", InputType.OPTION, 0, projects.size()-1));
+                        projectController.update(projects.get(index));
+                    } while (Validator.validateInput("\nDo you want to mark another project? (y/n) ", InputType.STRING).equals("y"));
+                }
+                break;
+            case 3:
+                System.out.println("\n#-------------- Renew a Cancelled Project --------------#");
+                List<Project> cancelledProjects = projectController.getAllCancelled();
+                projectController.list(cancelledProjects);
+                do {
+                    int index = Parser.parseInt(
+                            Validator.validateInput("\nEnter project index: " +
+                                    "\n> ", InputType.OPTION, 0, cancelledProjects.size()-1));
+                    Project project = cancelledProjects.get(index);
+                    Session.setProject(project);
+                    Session.setClient(project.getClient());
+                    cost = invoiceController.calculate();
+                    invoice = invoiceInputs.create();
+                    if(Validator.validateInput("\nDo you want to save this invoice? (y/n) ", InputType.STRING).equals("y")) {
+                        invoiceController.create(invoice, cost);
+                        projectController.updateOngoing(project);
+                    }
+                } while (Validator.validateInput("\nDo you want to calculate another project' costs? (y/n) ", InputType.STRING).equals("y"));
+
                 break;
             default:
                 System.out.println("\nInvalid option!\n");

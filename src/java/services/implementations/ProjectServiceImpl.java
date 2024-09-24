@@ -31,6 +31,18 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<Project> getAllCancelled() {
+        List<Project> projects = new ArrayList<>();
+        try {
+            projects = repository.getAllCancelled();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return projects;
+    }
+
+    @Override
     public Optional<Project> get(String id) {
         try {
             return repository.get(id);

@@ -30,6 +30,36 @@ public class ProjectRepositoryImpl extends RepositoryConstructor implements Proj
     }
 
     @Override
+    public List<Project> getAllCancelled() throws SQLException {
+        List<Project> projects = new ArrayList<>();
+        String sql = "SELECT p.*, c.* FROM projects p JOIN clients c ON p.client_id = c.id WHERE status = 'CANCELLED'";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+
+        while (rs.next()) {
+            String clientId = rs.getString("client_id");
+            String name = rs.getString("name");
+            String address = rs.getString("address");
+            String phone  = rs.getString("phone");
+            boolean isProfessional  = rs.getBoolean("is_professional");
+            Client client = new Client(clientId, name, address, phone, isProfessional);
+
+            String id = rs.getString("id");
+            String title = rs.getString("title");
+            double VAT = rs.getDouble("VAT");
+            double discount = rs.getDouble("discount");
+            double margin = rs.getDouble("margin");
+            ProjectStatus status = ProjectStatus.valueOf(rs.getString("status"));
+
+            Project project = new Project(id, title, VAT, discount, margin, status);
+            project.setClient(client);
+            projects.add(project);
+        }
+
+        return projects;
+    }
+
+    @Override
     public List<Project> getAll() throws SQLException {
         List<Project> projects = new ArrayList<>();
         String sql = "SELECT p.*, c.* FROM projects p JOIN clients c ON p.client_id = c.id WHERE status <> 'CANCELLED'";
