@@ -15,12 +15,12 @@ public class MaterialServiceImpl implements ComponentService<Material> {
     }
 
     @Override
-    public boolean update(Material material) {
-        return false;
-    }
-
-    @Override
     public boolean delete(String id) {
+        try {
+            return repository.delete(id);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
         return false;
     }
 

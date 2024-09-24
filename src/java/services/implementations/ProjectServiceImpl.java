@@ -34,8 +34,9 @@ public class ProjectServiceImpl implements ProjectService {
         try {
             return repository.updateStatus(id, status);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
+        return false;
     }
 
     @Override
@@ -43,7 +44,8 @@ public class ProjectServiceImpl implements ProjectService {
         try {
             return repository.save(project);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
+        return Optional.empty();
     }
 }
